@@ -125,42 +125,19 @@ fi
 
 
 #
-# Detect LiberiOS vs Electra
+# Detect Unc0ver
 #
-if [ -f /electra/inject_criticald ]; then
-    # This is Electra >= 1.0.2
-    echo "[+] Electra detected."
-    mkdir -p /electra/usr/local/bin
-    cp jtool.liberios /electra/usr/local/bin/
-    chmod +x /electra/usr/local/bin/jtool.liberios
-    JTOOL=/electra/usr/local/bin/jtool.liberios
-    cp bfinject4realz /electra/usr/local/bin/
-    INJECTOR=/electra/usr/local/bin/bfinject4realz
-elif [ -f /bootstrap/inject_criticald ]; then
-    # This is Electra < 1.0.2
-    echo "[+] Electra detected."
-    cp jtool.liberios /bootstrap/usr/local/bin/
-    chmod +x /bootstrap/usr/local/bin/jtool.liberios
-    JTOOL=/bootstrap/usr/local/bin/jtool.liberios
-    cp bfinject4realz /bootstrap/usr/local/bin/
-    INJECTOR=/bootstrap/usr/local/bin/bfinject4realz
-elif [ -f /jb/usr/local/bin/jtool ]; then
-    # This is LiberiOS
-    echo "[+] Liberios detected"
-    JTOOL=jtool
-    INJECTOR=`pwd`/bfinject4realz
-elif [ -f /jb/spawn ]; then
-    # This is unc0ver
-    echo "[+] Unc0ver detected"
+if [ -f /jb/offsets.plist ]; then
+    # This is Unc0ver 11.4.1
+    echo "[+] Unc0ver 11.4.1 detected"
     mkdir -p /jb/usr/local/bin
     cp jtool.liberios /jb/usr/local/bin/
     chmod +x /jb/usr/local/bin/jtool.liberios
     JTOOL=/jb/usr/local/bin/jtool.liberios
     cp bfinject4realz /jb/usr/local/bin/
     INJECTOR=/jb/usr/local/bin/bfinject4realz
-
 else
-    echo "[!] Unknown jailbreak. Aborting."
+    echo "[!] Not Unc0ver 11.4.1 jailbreak. Aborting."
     exit 1
 fi
 
@@ -249,7 +226,7 @@ for DYLIB in ${DYLIBS[@]}; do
     #
     # Inject!
     #
-    ./plrun "$RANDOM_NAME" "$PID" "$DYLIB_PATH"
+    "$RANDOM_NAME" "$PID" "$DYLIB_PATH"
     rm -f "$RANDOM_NAME"
 done
 
